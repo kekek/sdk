@@ -12,12 +12,9 @@
             "email": "jyf0231@163.com"
         }
     ],
-{
     "autoload": {
         "psr-4": {"Kekek\\Sdk\\": "src/"}
     }
-},
-
     "minimum-stability": "dev",
     "require": {}
 }
