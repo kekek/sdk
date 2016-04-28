@@ -40,11 +40,11 @@ class Sdk {
     }
 
     //用户登陆
-    public static function AccountSignin($account, $password,$origin) {
+    public static function AccountSignin($account, $password,$origin="") {
         $params = array(
             "account" => $account,
             "passwd" => $password,
-            "origin" => $origin
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/account/signin",self::$config["account"]["server"]);
@@ -82,10 +82,10 @@ class Sdk {
     }
 
 //admin 更新用户token
-    function AdminUserTokenUpdate($id,$origin) {
+    function AdminUserTokenUpdate($id,$origin="") {
         $params = array(
             "id" => $id,
-            "origin" => $origin
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/admin/token/update", self::$config["account"]["server"]);
@@ -96,10 +96,10 @@ class Sdk {
     }
 
 //api token get user info
-    function InfoByToken($token,$origin) {
+    function InfoByToken($token,$origin="") {
         $params = array(
             "token" => $token,
-            "origin" => $origin
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/account/info", self::$config["account"]["server"]);
@@ -110,10 +110,10 @@ class Sdk {
     }
 
 //admin uid by token
-    function AdminUidByToken($token,$origin) {
+    function AdminUidByToken($token,$origin="") {
         $params = array(
             "token" => $token,
-            "origin" => $origin
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/admin/token/uid", self::$config["account"]["server"]);
@@ -163,12 +163,12 @@ class Sdk {
     }
 
 //忘记密码验证码
-    function ResetPwd($account,$pass,$code,$origin){
+    function ResetPwd($account,$pass,$code,$origin=""){
         $params = array(
             "account" => $account,
             "passwd" => $pass,
             "code" =>$code,
-            "origin" =>$origin
+            "origin" =>empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/account/resetpwd", self::$config["account"]["server"]);
@@ -179,12 +179,12 @@ class Sdk {
     }
 
 //用户注册
-    function SignUp($account,$pwd,$code,$origin){
+    function SignUp($account,$pwd,$code,$origin=""){
         $params = array(
             "account" => $account,
             "passwd" => $pwd,
             "code" => $code,
-            "origin" => $origin
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
         $url = sprintf("%s/account/signup", self::$config["account"]["server"]);
