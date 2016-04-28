@@ -1,0 +1,17 @@
+{
+    "name": "kekek/sdk",
+    "description": "api interface invoke",
+    "type": "php",
+    "require-dev": {
+        "emarref/jwt": "^1.0"
+    },
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "jinyf",
+            "email": "jyf0231@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
