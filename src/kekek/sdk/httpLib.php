@@ -27,6 +27,7 @@ class HttpLib {
     }
 
     public static function post($url, $params) {
+        $params["ip"] = \Request::ip();
 
         $header = [
             "Authorization:Bearer " . self::authorization(),
@@ -59,6 +60,8 @@ class HttpLib {
     }
 
     public static function get($url, $params) {
+        $params["ip"] = \Request::ip();
+
         $header = [
             "Authorization:Bearer " .self::authorization(),
             "client-id:".self::$appKey

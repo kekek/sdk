@@ -71,7 +71,7 @@ class Sdk {
     }
 
 //admin create user
-    function AdminUserCreateFromOauth() {
+    public static function AdminUserCreateFromOauth() {
         $params = array();
 
         $url = sprintf("%s/admin/create/oauth", self::$config["account"]["server"]);
@@ -82,7 +82,7 @@ class Sdk {
     }
 
 //admin 更新用户token
-    function AdminUserTokenUpdate($id,$origin="") {
+    public static function AdminUserTokenUpdate($id,$origin="") {
         $params = array(
             "id" => $id,
             "origin" => empty($origin) ? self::$config["origin"] : $origin
@@ -96,7 +96,7 @@ class Sdk {
     }
 
 //api token get user info
-    function InfoByToken($token,$origin="") {
+    public static function InfoByToken($token,$origin="") {
         $params = array(
             "token" => $token,
             "origin" => empty($origin) ? self::$config["origin"] : $origin
@@ -110,7 +110,7 @@ class Sdk {
     }
 
 //admin uid by token
-    function AdminUidByToken($token,$origin="") {
+    public static function AdminUidByToken($token,$origin="") {
         $params = array(
             "token" => $token,
             "origin" => empty($origin) ? self::$config["origin"] : $origin
@@ -124,7 +124,7 @@ class Sdk {
     }
 
 //admin uid by token
-    function AdminInfoById($id) {
+    public static function AdminInfoById($id) {
         $params = array(
             "id" => $id
         );
@@ -137,7 +137,7 @@ class Sdk {
     }
 
 //发送用户注册验证码 email or phone
-    function UserRegisterCode($account){
+    public static function UserRegisterCode($account){
         $params = array(
             "account" => $account
         );
@@ -150,7 +150,7 @@ class Sdk {
     }
 
 //忘记密码验证码
-    function PwdSendCode($account){
+    public static function PwdSendCode($account){
         $params = array(
             "account" => $account
         );
@@ -163,7 +163,7 @@ class Sdk {
     }
 
 //忘记密码验证码
-    function ResetPwd($account,$pass,$code,$origin=""){
+    public static function ResetPwd($account,$pass,$code,$origin=""){
         $params = array(
             "account" => $account,
             "passwd" => $pass,
@@ -179,7 +179,7 @@ class Sdk {
     }
 
 //用户注册
-    function SignUp($account,$pwd,$code,$origin=""){
+    public static function SignUp($account,$pwd,$code,$origin=""){
         $params = array(
             "account" => $account,
             "passwd" => $pwd,
@@ -188,6 +188,78 @@ class Sdk {
         );
 
         $url = sprintf("%s/account/signup", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+    //登录后修改密码
+    public static function ChangePwd($token,$oldPwd,$newPwd,$origin){
+        $params = array(
+            "token" => $token,
+            "oldPwd" => $oldPwd,
+            "newPwd" => $newPwd,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/changepwd", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+    //修改用户昵称
+    public static function updateNickName($token,$nickName,$origin=""){
+        $params = array(
+            "token" => $token,
+            "nickname" => $nickName,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/change/nickname", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+    //图片验证码
+    public static function ImageCaptcha(){
+        $params = array();
+
+        $url = sprintf("%s/account/captcha", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+    //忘记密码＋图片验证码
+    public static function PwdSendCodeWithCaptcha($account,$key,$code){
+        $params = array(
+            "account" => $account,
+            "captcha_key" => $key,
+            "captcha_code" => $code
+        );
+
+        $url = sprintf("%s/account/resetpwd/code/captcha", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+//注册密码验证码
+    public static function UserRegisterCodeWithCaptcha($account,$key,$code){
+        $params = array(
+            "account" => $account,
+            'captcha_key' => $key,
+            'captcha_code' => $code
+        );
+
+        $url = sprintf("%s/account/signup/code/captcha", self::$config["account"]["server"]);
 
         $r = self::HttpLib()->post($url, $params);
 
