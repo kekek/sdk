@@ -195,10 +195,9 @@ class Sdk {
     }
 
     //登录后修改密码
-    public static function ChangePwd($token,$oldPwd,$newPwd,$origin){
+    public static function ChangePwd($token,$newPwd,$origin){
         $params = array(
             "token" => $token,
-            "oldPwd" => $oldPwd,
             "newPwd" => $newPwd,
             "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
