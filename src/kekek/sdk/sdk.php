@@ -195,10 +195,10 @@ class Sdk {
     }
 
     //登录后修改密码
-    public static function ChangePwd($token,$newPwd,$origin){
+    public static function ChangePwd($token,$newPwd,$origin=""){
         $params = array(
             "token" => $token,
-            "newPwd" => $newPwd,
+            "newpwd" => $newPwd,
             "origin" => empty($origin) ? self::$config["origin"] : $origin
         );
 
@@ -259,6 +259,54 @@ class Sdk {
         );
 
         $url = sprintf("%s/account/signup/code/captcha", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+//    ===绑定帐号====
+
+//    验证码
+    public static function getBindCode($token,$account,$origin=""){
+        $params = array(
+            "account" => $account,
+            'token' => $token,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/bind/code", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+//    绑定
+    public static function doBind($token,$account,$code,$origin=""){
+        $params = array(
+            "account" => $account,
+            'token' => $token,
+            'code' => $code,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/bind/update", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+//    解绑帐号
+    public static function unbind($token,$account,$origin=""){
+        $params = array(
+            "account" => $account,
+            'token' => $token,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/unbind", self::$config["account"]["server"]);
 
         $r = self::HttpLib()->post($url, $params);
 
