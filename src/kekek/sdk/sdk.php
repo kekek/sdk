@@ -136,6 +136,35 @@ class Sdk {
         return $r;
     }
 
+    // 更新token,登陆
+    public static function AdminUpdateToken($id,$origin=""){
+
+        $params = array(
+            "id" => $id,
+            "origin" =>empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/admin/token/update", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+    //第三方自动创建用户
+    public static function AdminCreateOauthUser($nickname,$avatar){
+        $params = array(
+            "nickname" => $nickname,
+            "avatar" =>$avatar
+        );
+
+        $url = sprintf("%s/admin/create/oauth", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
 //发送用户注册验证码 email or phone
     public static function UserRegisterCode($account){
         $params = array(
@@ -307,6 +336,27 @@ class Sdk {
         );
 
         $url = sprintf("%s/account/unbind", self::$config["account"]["server"]);
+
+        $r = self::HttpLib()->post($url, $params);
+
+        return $r;
+    }
+
+
+    /**
+     * 解绑qq或者微博时
+     * 检查账号中，email、phone至少存在一项，密码存在
+     *
+     * @param $uid
+     * @return bool
+     */
+    public static function checkAccount($token,$origin=""){
+        $params = array(
+            'token' => $token,
+            "origin" => empty($origin) ? self::$config["origin"] : $origin
+        );
+
+        $url = sprintf("%s/account/unbind/check", self::$config["account"]["server"]);
 
         $r = self::HttpLib()->post($url, $params);
 
